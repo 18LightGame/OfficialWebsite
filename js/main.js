@@ -122,9 +122,9 @@ gameSoftSecs.forEach((sec) => {
     start: "top center",
     end: "bottom center",
     onEnter: () => tl.play(),
-    onLeave: () => tl.pause(0),
+    // onLeave: () => tl.pause(0),
     onEnterBack: () => tl.play(),
-    onLeaveBack: () => tl.pause(0),
+    // onLeaveBack: () => tl.pause(0),
   });
 });
 
@@ -144,6 +144,17 @@ let gameDemoSlider = new Swiper(".gamesoft-demo-slider", {
         delay: 2500,
         disableOnInteraction: true,
     },
+});
+
+// Game Info Pronty Effect
+const turb = document.getElementById("turbulence-pronty");
+
+gsap.to(turb, {
+    attr: { baseFrequency: "0.015 0.025" },
+    duration: 6,
+    repeat: -1,
+    yoyo: true,
+    ease: "sine.inOut"
 });
 
 // NaviDots Detected

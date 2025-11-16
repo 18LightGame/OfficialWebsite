@@ -195,14 +195,28 @@
     cursor: pointer;
     display: flex;
     align-items: center;
-    gap: 0 50px;
     &::after {
+        margin: 0 0 0 50px;
         font-family: "Font Awesome 7 Free";
         font-weight: 700;
         font-style: normal;
         display: block;
         content: '\f078';
         font-size: 10px;
+    }
+    &::before {
+        display: block;
+        content: '';
+        width: 6px;
+        height: 6px;
+        border-radius: 50%;
+        background-color: #ffb11b;
+        margin: 0 10px 0 0;
+        opacity: 0;
+        transition: .3s;
+    }
+    &:hover::before {
+        opacity: 1;
     }
 }
 .attached-menu {
@@ -228,10 +242,26 @@
     color: #1e1e1e;
     padding: 16px 12px;
     width: 200px;
-    display: block;
+    display: flex;
     white-space: nowrap;
+    align-items: center;
     &::after {
         display: none;
+    }
+    &::before {
+        display: block;
+        content: '';
+        width: 6px;
+        height: 6px;
+        border-radius: 50%;
+        background-color: #ffb11b;
+        margin: 0;
+        opacity: 0;
+        transition: .3s;
+    }
+    &:hover::before {
+        opacity: 1;
+        margin: 0 10px 0 0;
     }
 }
 .lang-wrapper {
@@ -452,9 +482,10 @@
 }
 
 /* 遊戲主題共用 */
-.game-soft-sec{
+.game-soft-sec {
     position: relative;
     overflow: hidden;
+    min-height: 100vh;
 }
 .game-soft-sec-bg {
     position: absolute;
@@ -922,6 +953,10 @@
     border-radius: 15px;
     box-shadow: inset 0 0 10px rgba(0,0,0,0.16);
     gap: 35px 0;
+    &.separate-bg {
+        background-color: rgba(255,255,255,0.6);
+        border: 1px solid rgba(255,255,255,0.15);
+    }
 }
 #mc_embed_signup_scroll {
     display: flex;
@@ -1270,6 +1305,22 @@
         &.active {
             border-color: #F73E3E;
         }
+        &.video {
+            &::after {
+                display: block;
+                font-family: 'Font Awesome 7 Free';
+                font-weight: 900;
+                font-style: normal;
+                font-size: 1.4rem;
+                content: '\f04b';
+                position: absolute;
+                z-index: 2;
+                top: 50%;
+                color: #fff;
+                transform: translateY(-50%);
+                text-shadow: 0 4px 4px rgba(0,0,0,0.25);
+            }
+        }
         > img {
             display: block;
             width: 100%;
@@ -1280,6 +1331,8 @@
 }
 .game-info-sec {
     padding: 80px 0 40px 0;
+    position: relative;
+    overflow: hidden;
     &.nano {
         background-color: #292E33;
     }
@@ -1293,6 +1346,71 @@
         display: flex;
         flex-direction: column;
         align-items: center;
+    }
+    > .content-area {
+        position: relative;
+        z-index: 2;
+    }
+}
+.game-info-sec-effect {
+    display: block;
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    z-index: 1;
+    background-position: center top;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    top: 0;
+    &.nano {
+        background-image: url(../images/game_info_effect_nano.png);
+        animation: bgDrift 30s linear infinite;
+        &::after {
+            content: "";
+            position: absolute;
+            inset: 0;
+            pointer-events: none;
+            z-index: 2;
+
+            /* 透明層疊加，不會蓋掉你的背景圖 */
+            mix-blend-mode: screen;
+            opacity: 0;
+
+            background:
+                /* fractal noise 層（賽博 teal 色） */
+                url("data:image/svg+xml;utf8,\
+                <svg xmlns='http://www.w3.org/2000/svg' width='200' height='200'>\
+                <filter id='n'>\
+                    <feTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='3' />\
+                    <feColorMatrix type='matrix' values='0 0 0 0 0  0 0 0 0 1  0 0 0 0 1  0 0 0 1 0'/>\
+                </filter>\
+                <rect width='100%' height='100%' filter='url(%23n)' />\
+                </svg>"
+                ),
+                /* scanline */
+                repeating-linear-gradient(
+                    0deg,
+                    rgba(0,255,255,0.10) 0px,
+                    rgba(0,255,255,0.10) 1px,
+                    rgba(0,0,0,0.06) 2px
+                );
+
+            animation: cyberNoise 3.4s infinite;
+        }
+    }
+    &.pronty {
+        background-image: url(../images/game_info_effect_pronty.png);
+        background-size: cover;
+        background-attachment: unset;
+        will-change: filter;
+        opacity: 0.2;
+        filter: url(#waterRipple);
+    }
+    &.judgement {
+        background-image: url(../images/game_info_effect_behind.jpg);
+        background-size: cover;
+        background-attachment: unset;
+        opacity: 0.2;
     }
 }
 .game-info-sec-title {
@@ -1322,7 +1440,12 @@
     background-color: #AA3434;
     box-shadow: 0 4px 4px rgba(0,0,00.25);
     border-radius: 8px;
+    transform: translate(0,0);
     transition: .3s;
+    &:hover {
+        transform: translate(0,3px);
+        box-shadow: 0 1px 3px rgba(0,0,0,0.25);
+    }
 }
 .game-info-text {
     font-size: 16px;
@@ -1435,4 +1558,52 @@
   0%   { background-position: 10% 40%; }
   50%  { background-position: 80% 60%; }
   100% { background-position: 10% 40%; }
+}
+@keyframes cyberNoise {
+    0% {
+        opacity: 0;
+        transform: translate(0,0);
+        filter: brightness(1.2) contrast(2);
+    }
+    5% {
+        opacity: 0.4;
+        transform: translate(-3px,2px) scale(1.03);
+        filter: brightness(1.6) contrast(3)
+            drop-shadow(0 0 6px #00eaff)
+            drop-shadow(0 0 12px #00eaff);
+    }
+    15% {
+        opacity: 0.3;
+        transform: translate(2px,-2px) scale(1.01);
+        filter: brightness(1.4) contrast(2.6)
+            drop-shadow(1px 0 3px cyan)
+            drop-shadow(-1px 0 3px magenta);
+    }
+    22% {
+        opacity: 0.2;
+        transform: translate(-6px,1px) scaleY(0.97);
+    }
+    30% {
+        opacity: 0.1;
+        transform: translate(0,0);
+    }
+    55% {
+        opacity: 0.2;
+        transform: translate(1px,-1px);
+    }
+    70% {
+        opacity: 0.1;
+    }
+    100% {
+        opacity: 0;
+        transform: translate(0,0);
+    }
+}
+@keyframes bgDrift {
+    0% {
+        background-position: 0% 0%;
+    }
+    100% {
+        background-position: 100% 100%;
+    }
 }
