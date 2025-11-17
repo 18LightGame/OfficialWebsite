@@ -548,7 +548,7 @@
   position: relative;
   align-items: center;
   flex-direction: column;
-  padding: 0 15%;
+  padding: 0 6%;
 }
 @media (max-width: 991.98px) {
   .game-soft-wrapper {
@@ -614,6 +614,9 @@
   padding-bottom: 56.25%;
   overflow: hidden;
 }
+.gamesoft-demo-item:hover > img {
+  transform: scale(1.05);
+}
 .gamesoft-demo-item > img {
   display: block;
   width: 100%;
@@ -623,6 +626,8 @@
   left: 0;
   -o-object-fit: cover;
      object-fit: cover;
+  transform: scale(1);
+  transition: 0.3s;
 }
 .gamesoft-demo-item > iframe {
   width: 100%;
@@ -1440,6 +1445,25 @@
   transition: 0.3s;
 }
 .selling-resource-link:hover {
+  transform: translate(0, 3px);
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.25);
+}
+
+.go-game-info {
+  display: block;
+  padding: 8px 24px;
+  font-size: 16px;
+  color: #fff;
+  text-decoration: none;
+  background-color: #AA3434;
+  box-shadow: 0 4px 4px rgb(0, 0, 0.25);
+  border-radius: 8px;
+  margin: 16px 0 0 0;
+  align-self: flex-end;
+  transform: translate(0, 0);
+  transition: 0.3s;
+}
+.go-game-info:hover {
   transform: translate(0, 3px);
   box-shadow: 0 1px 3px rgba(0, 0, 0, 0.25);
 }
