@@ -171,3 +171,39 @@ gsap.to(turb, {
 //   updateDots();
 //   updateToolBar();
 // });
+
+document.getElementById("mc-embedded-subscribe-form").addEventListener("submit", function(e) {
+    e.preventDefault();
+
+    const email = document.getElementById("mce-EMAIL").value;
+    const lname = document.getElementById("mce-LNAME").value;
+    const phone = document.getElementById("mce-PHONE").value;
+    const status = document.getElementById("mc-status");
+
+    if(email==""){
+        alert("Email必填");
+        return
+    }
+
+    const url = "https://gmail.us22.list-manage.com/subscribe/post-json?u=d2dafc0aa1da36bc830a8dcc2&id=2633d14e4a&c=?";
+
+    status.textContent = "送出中...";
+    status.style.color = "#555";
+
+    // 利用 JSONP 呼叫 Mailchimp
+    const script = document.createElement("script");
+    script.src = `${url}&EMAIL=${encodeURIComponent(email)}&LNAME=${encodeURIComponent(lname)}&PHONE=${encodeURIComponent(phone)}&tags=${encodeURIComponent("115")}&c=mcCallback`;
+    
+    window.mcCallback = function(data) {
+        if (data.result === "success") {
+            status.textContent = "✅ 感謝訂閱！";
+            status.style.color = "green";
+        } else {
+            status.textContent = "❌ 發送失敗：" + (data.msg || "請稍後再試");
+            status.style.color = "red";
+        }
+        script.remove();
+    };
+    
+    document.body.appendChild(script);
+});
