@@ -948,6 +948,36 @@
   background-color: rgba(255, 255, 255, 0.6);
   border: 1px solid rgba(255, 255, 255, 0.15);
 }
+#mc-embedded-subscribe-form.separate-bg.nano {
+  background-color: rgb(182, 215, 217);
+  border: 1px solid rgb(91, 128, 117);
+}
+#mc-embedded-subscribe-form.separate-bg.nano .form-title {
+  color: #2E928C;
+}
+#mc-embedded-subscribe-form.separate-bg.nano #mc-embedded-subscribe::after {
+  background-color: #2E928C;
+}
+#mc-embedded-subscribe-form.separate-bg.pronty {
+  background-color: rgb(166, 181, 208);
+  border: 1px solid rgb(54, 66, 89);
+}
+#mc-embedded-subscribe-form.separate-bg.pronty .form-title {
+  color: #041223;
+}
+#mc-embedded-subscribe-form.separate-bg.pronty #mc-embedded-subscribe::after {
+  background-color: #041223;
+}
+#mc-embedded-subscribe-form.separate-bg.judgement {
+  background-color: rgb(255, 221, 185);
+  border: 1px solid rgb(200, 162, 128);
+}
+#mc-embedded-subscribe-form.separate-bg.judgement .form-title {
+  color: #F73E3E;
+}
+#mc-embedded-subscribe-form.separate-bg.judgement #mc-embedded-subscribe::after {
+  background-color: #F73E3E;
+}
 
 #mc_embed_signup_scroll {
   display: flex;
