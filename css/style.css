@@ -1414,6 +1414,7 @@
 .game-info-sec-effect.nano {
   background-image: url(../images/nano_apostle_sec_bg.png);
   animation: bgDrift 30s linear infinite;
+  opacity: 0.5;
 }
 .game-info-sec-effect.nano::after {
   content: "";

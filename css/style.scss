@@ -1402,6 +1402,7 @@
     &.nano {
         background-image: url(../images/nano_apostle_sec_bg.png);
         animation: bgDrift 30s linear infinite;
+        opacity: 0.5;
         &::after {
             content: "";
             position: absolute;
