@@ -1412,7 +1412,7 @@
   top: 0;
 }
 .game-info-sec-effect.nano {
-  background-image: url(../images/game_info_effect_nano.png);
+  background-image: url(../images/nano_apostle_sec_bg.png);
   animation: bgDrift 30s linear infinite;
 }
 .game-info-sec-effect.nano::after {
