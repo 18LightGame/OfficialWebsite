@@ -29,7 +29,7 @@ document.addEventListener("DOMContentLoaded", function () {
     freeMode: false,
     breakpoints: {
       0: { slidesPerView: 3 },
-      768: { slidesPerView: 5 },
+      698: { slidesPerView: 5 },
       1200: { slidesPerView: 10 },
     },
   });
@@ -82,51 +82,51 @@ document.addEventListener("DOMContentLoaded", function () {
 });
 
 // Effect
-gsap.registerPlugin(ScrollTrigger, ScrollToPlugin);
+// gsap.registerPlugin(ScrollTrigger, ScrollToPlugin);
 
-const sections = document.querySelectorAll(".topic-sec");
+// const sections = document.querySelectorAll(".topic-sec");
 // const dotNav = document.querySelector(".dot-nav");
-const toolSec = document.querySelector(".tool-sec");
+// const toolSec = document.querySelector(".tool-sec");
 
-let currentSection = 0;
-let isAnimating = false;
-let isDesktop = window.innerWidth > 767.98;
+// let currentSection = 0;
+// let isAnimating = false;
+// let isDesktop = window.innerWidth > 767.98;
 
 // === Game Soft Section ===
-const gameSoftSecs = document.querySelectorAll(".game-soft-sec");
+// const gameSoftSecs = document.querySelectorAll(".game-soft-sec");
 
-gameSoftSecs.forEach((sec) => {
-  const bg = sec.querySelector(".game-soft-sec-bg");
-  if (!bg) return;
+// gameSoftSecs.forEach((sec) => {
+//   const bg = sec.querySelector(".game-soft-sec-bg");
+//   if (!bg) return;
 
   // Timeline
-  const tl = gsap.timeline({ repeat: -1, repeatDelay: 0.2, paused: true });
+  // const tl = gsap.timeline({ repeat: -1, repeatDelay: 0.2, paused: true });
 
   // Backgrouind Effect
-  tl.fromTo(bg, 
-    { opacity: 0, scale: 1, filter: "blur(10px) brightness(0.6)" },
-    { opacity: 1, scale: 1.1, filter: "blur(0px) brightness(1)", duration: 1.2, ease: "power2.out" }
-  )
-  .to(bg, 
-    { scale: 1.2, rotate: "3deg", duration: 8, ease: "sine.inOut" }
-  )
-  .to(bg, 
-    { filter: "blur(2px) brightness(1.8)", duration: .8, ease: "sine.inOut" }
-  )
-  .to(bg, 
-    { opacity: 0, scale: 1.4, filter: "blur(10px) brightness(2)", duration: .7, ease: "power2.in" }
-  );
+//   tl.fromTo(bg, 
+//     { opacity: 0, scale: 1, filter: "blur(10px) brightness(0.6)" },
+//     { opacity: 1, scale: 1.1, filter: "blur(0px) brightness(1)", duration: 1.2, ease: "power2.out" }
+//   )
+//   .to(bg, 
+//     { scale: 1.2, rotate: "3deg", duration: 8, ease: "sine.inOut" }
+//   )
+//   .to(bg, 
+//     { filter: "blur(2px) brightness(1.8)", duration: .8, ease: "sine.inOut" }
+//   )
+//   .to(bg, 
+//     { opacity: 0, scale: 1.4, filter: "blur(10px) brightness(2)", duration: .7, ease: "power2.in" }
+//   );
 
-  ScrollTrigger.create({
-    trigger: sec,
-    start: "top center",
-    end: "bottom center",
-    onEnter: () => tl.play(),
-    // onLeave: () => tl.pause(0),
-    onEnterBack: () => tl.play(),
-    // onLeaveBack: () => tl.pause(0),
-  });
-});
+//   ScrollTrigger.create({
+//     trigger: sec,
+//     start: "top center",
+//     end: "bottom center",
+//     onEnter: () => tl.play(),
+//     onLeave: () => tl.pause(0),
+//     onEnterBack: () => tl.play(),
+//     onLeaveBack: () => tl.pause(0),
+//   });
+// });
 
 // About Gallery 
 let aboutGallery = new Swiper(".about-gallery", {

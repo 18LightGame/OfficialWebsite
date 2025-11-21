@@ -497,22 +497,27 @@
     background-repeat: no-repeat;
     background-size: cover;
     transform-origin: center;
-    filter: blur(10px) brightness(0.6);
+    // filter: blur(10px) brightness(0.6);
     &::after {
         display: block;
         content: '';
         width: 100%;
         height: 100%;
-        background-color: rgba(255,255,255,0);
+        background-color: rgba(0,0,0,0.2);
         position: absolute;
         top: 0;
         left: 0;
+        z-index: 1;
+        backdrop-filter: blur(2px);
     }
     &.pronty {
         background-image: url(../images/pronty_sec_bg.png);
     }
     &.judgement {
         background-image: url(../images/judge_sec_bg.jpg);
+        &::after {
+            background-color: rgba(0,0,0,0.6);
+        }
     }
     &.nano {
         background-image: url(../images/nano_apostle_sec_bg.png);
@@ -963,6 +968,36 @@
     &.separate-bg {
         background-color: rgba(255,255,255,0.6);
         border: 1px solid rgba(255,255,255,0.15);
+        &.nano {
+            background-color: rgb(182, 215, 217);
+            border: 1px solid rgb(91, 128, 117);
+            .form-title {
+                color: #2E928C;
+            }
+            #mc-embedded-subscribe::after {
+                background-color: #2E928C;
+            }
+        }
+        &.pronty {
+            background-color: rgb(166, 181, 208);
+            border: 1px solid rgb(54, 66, 89);
+            .form-title {
+                color: #041223;
+            }
+            #mc-embedded-subscribe::after {
+                background-color: #041223;
+            }
+        }
+        &.judgement {
+            background-color: rgb(255, 221, 185);
+            border: 1px solid rgb(200, 162, 128);
+            .form-title {
+                color: #F73E3E;
+            }
+            #mc-embedded-subscribe::after {
+                background-color: #F73E3E;
+            }
+        }
     }
 }
 #mc_embed_signup_scroll {
@@ -1309,6 +1344,12 @@
         justify-content: center;
         border: 3px solid #6b6b6b;
         cursor: pointer;
+        @include xl {
+            padding-bottom: 7.6%;
+        }
+        @include md {
+            padding-bottom: 12%;
+        }
         &.active {
             border-color: #F73E3E;
         }
@@ -1370,8 +1411,9 @@
     background-attachment: fixed;
     top: 0;
     &.nano {
-        background-image: url(../images/game_info_effect_nano.png);
+        background-image: url(../images/nano_apostle_sec_bg.png);
         animation: bgDrift 30s linear infinite;
+        opacity: 0.5;
         &::after {
             content: "";
             position: absolute;
