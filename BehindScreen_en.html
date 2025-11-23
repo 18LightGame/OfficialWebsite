@@ -100,7 +100,7 @@
     <section class="topic-sec game-page-sec">
         <div class="swiper-wrapper">
             <div class="swiper-slide gamepage-demo-item">
-                <iframe src="https://www.youtube.com/embed/2AfE_IvHjt0?si=qqYoIzq8BBTntgrZ" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+                <iframe id="youtubePlayer" src="https://www.youtube.com/embed/2AfE_IvHjt0?enablejsapi=1&si=qqYoIzq8BBTntgrZ" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
             </div>
             <div class="swiper-slide gamepage-demo-item">
                 <img src="images/behind_slider_preview_02.png">
@@ -159,7 +159,7 @@
 
             <div class="game-info-cnt-wrapper">
                 <div class="infobox half">
-                    <img src="images/behind_gameinfo_pic_01.jpg">
+                    <img src="images/behind_gameinfo_pic_01.gif">
                 </div>
                 <div class="infobox half">
                     <h2 class="game-infobox-title judgement">Vintage hand-drawing art style</h2>
@@ -173,13 +173,13 @@
                     <p class="game-info-text judgement">Features various playing styles. Players will encounter small games such as Sōkoban, fighting, stealth, and Parkour in different life stages of our protagonist, which are all related to the main storyline. And through these encounters, will players be able to discover the truth behind every event.</p>
                 </div>
                 <div class="infobox half">
-                    <img src="images/behind_gameinfo_pic_02.jpg">
+                    <img src="images/behind_gameinfo_pic_02.gif">
                 </div>
             </div>
 
             <div class="game-info-cnt-wrapper">
                 <div class="infobox half">
-                    <img src="images/behind_gameinfo_pic_03.jpg">
+                    <img src="images/behind_gameinfo_pic_03.gif">
                 </div>
                 <div class="infobox half">
                     <h2 class="game-infobox-title judgement">Social issues</h2>
@@ -193,7 +193,7 @@
                     <p class="game-info-text judgement">Based on many true stories which happened between the 1960s to 1980s Taiwan. Players can take a glimpse of Taiwanese society in the past through old-fashion TV news, experiencing the oppression in schools, and true-life stories told by our protagonist and other characters.</p>
                 </div>
                 <div class="infobox half">
-                    <img src="images/behind_gameinfo_pic_04.jpg">
+                    <img src="images/behind_gameinfo_pic_04.gif">
                 </div>
             </div>
 
@@ -254,6 +254,7 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollToPlugin.min.js"></script>
+    <script src="https://www.youtube.com/iframe_api"></script>
     <script src="js/main.js"></script>
     <script>
         document.getElementById("mc-embedded-subscribe-form").addEventListener("submit", function(e) {

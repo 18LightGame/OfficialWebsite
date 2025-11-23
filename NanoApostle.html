@@ -100,7 +100,7 @@
     <section class="topic-sec game-page-sec">
         <div class="swiper-wrapper">
             <div class="swiper-slide gamepage-demo-item">
-                <iframe src="https://www.youtube.com/embed/C6k8XunVk1o?si=RsgaTYd5H27cO9r1" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+                <iframe id="youtubePlayer" src="https://www.youtube.com/embed/C6k8XunVk1o?enablejsapi=1&si=RsgaTYd5H27cO9r1" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
             </div>
             <div class="swiper-slide gamepage-demo-item">
                 <img src="images/nano_slider_preview_02.png">
@@ -134,7 +134,7 @@
     <div class="game-page-slider-preview">
         <div class="swiper-wrapper">
             <figure class="swiper-slide video"><img src="images/nano_slider_preview_01.png"></figure>
-            <figure class="swiper-slide video"><img src="images/nano_slider_preview_02.png"></figure>
+            <figure class="swiper-slide"><img src="images/nano_slider_preview_02.png"></figure>
             <figure class="swiper-slide"><img src="images/nano_slider_preview_03.png"></figure>
             <figure class="swiper-slide"><img src="images/nano_slider_preview_04.png"></figure>
             <figure class="swiper-slide"><img src="images/nano_slider_preview_05.png"></figure>
@@ -173,7 +173,7 @@
 
             <div class="game-info-cnt-wrapper">
                 <div class="infobox major">
-                    <img src="images/nano_gameinfo_pic_01.jpg">
+                    <img src="images/nano_gameinfo_pic_01.gif">
                 </div>
                 <div class="infobox minor">
                     <h2 class="game-infobox-title">與各種強大殘酷的生化兵器廝殺</h2>
@@ -198,13 +198,13 @@
                     <p class="game-info-text">奈米機械能檢測敵人的能量流向與結構弱點，是為「破壞點」。玩家需要觀察敵人的行為，找出它們的破壞點，利用它對敵人造成致命的傷害。</p>
                 </div>
                 <div class="infobox major">
-                    <img src="images/nano_gameinfo_pic_02.jpg">
+                    <img src="images/nano_gameinfo_pic_02.gif">
                 </div>
             </div>
 
             <div class="game-info-cnt-wrapper">
                 <div class="infobox half">
-                    <img src="images/nano_gameinfo_pic_03.jpg">
+                    <img src="images/nano_gameinfo_pic_03.gif">
                 </div>
                 <div class="infobox half">
                     <h2 class="game-infobox-title">以各種技能搭配來構築您的遊玩風格</h2>
@@ -275,6 +275,7 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollToPlugin.min.js"></script>
+    <script src="https://www.youtube.com/iframe_api"></script>
     <script src="js/main.js"></script>
     <script>
         document.getElementById("mc-embedded-subscribe-form").addEventListener("submit", function(e) {

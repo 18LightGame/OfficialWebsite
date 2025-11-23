@@ -27,11 +27,7 @@ document.addEventListener("DOMContentLoaded", function () {
     watchSlidesProgress: true,
     slideToClickedSlide: true,
     freeMode: false,
-    breakpoints: {
-      0: { slidesPerView: 3 },
-      698: { slidesPerView: 5 },
-      1200: { slidesPerView: 10 },
-    },
+    centeredSlides: false,
   });
 
   // === Main Swiper ===
@@ -44,11 +40,14 @@ document.addEventListener("DOMContentLoaded", function () {
       disableOnInteraction: false,
     },
     on: {
-      slideChange: function () {
-        syncPreviewActive(this.realIndex);
-      },
+      slideChange() {
+        if (youtubePlayer && youtubePlayer.pauseVideo) {
+          youtubePlayer.pauseVideo();
+        }
+      }
     },
   });
+
 
   // === Click Preview to Switch ===
   previewSwiper.on("click", (swiper) => {

@@ -100,7 +100,7 @@
     <section class="topic-sec game-page-sec">
         <div class="swiper-wrapper">
             <div class="swiper-slide gamepage-demo-item">
-                <iframe src="https://www.youtube.com/embed/TZcaucA5lSo?si=k2srD2Fd0zLpkbqh" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+                <iframe id="youtubePlayer" src="https://www.youtube.com/embed/TZcaucA5lSo?enablejsapi=1&si=k2srD2Fd0zLpkbqh" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
             </div>
             <div class="swiper-slide gamepage-demo-item">
                 <img src="images/pronty_demo_slider_02.jpg">
@@ -166,7 +166,7 @@
 
             <div class="game-info-cnt-wrapper">
                 <div class="infobox major">
-                    <img src="images/pronty_gameinfo_pic_01.jpg">
+                    <img src="images/pronty_gameinfo_pic_01.gif">
                 </div>
                 <div class="infobox minor">
                     <h2 class="game-infobox-title">標槍攻擊的特殊玩法</h2>
@@ -180,13 +180,13 @@
                     <p class="game-info-text">遭遇各種由可怕的海洋生物和海洋垃圾融合而成的生物。雖然有些看起來很容易擊敗，但深海中總潛伏著更大隻的魚……與巨型Boss戰鬥，為曾經蓬勃發展的羅伊拉帶來希望，揭開怪物和污染背後的真相。</p>
                 </div>
                 <div class="infobox major">
-                    <img src="images/pronty_gameinfo_pic_02.jpg">
+                    <img src="images/pronty_gameinfo_pic_02.gif">
                 </div>
             </div>
 
             <div class="game-info-cnt-wrapper">
                 <div class="infobox major">
-                    <img src="images/pronty_gameinfo_pic_03.jpg">
+                    <img src="images/pronty_gameinfo_pic_03.gif">
                 </div>
                 <div class="infobox minor">
                     <h2 class="game-infobox-title">自由組合技能，創造帥氣爽快的玩法</h2>
@@ -200,7 +200,7 @@
                     <p class="game-info-text">在水下類銀河戰士惡魔城遊戲中探索墮落的海底城市羅伊拉。</p>
                 </div>
                 <div class="infobox major">
-                    <img src="images/pronty_gameinfo_pic_04.jpg">
+                    <img src="images/pronty_gameinfo_pic_04.gif">
                 </div>
             </div>
 
@@ -268,18 +268,19 @@
         </div>
     </section>
 
-    <svg width="0" height="0" style="position:absolute">
+    <!-- <svg width="0" height="0" style="position:absolute">
         <filter id="waterRipple">
             <feTurbulence id="turbulence-pronty" type="fractalNoise" baseFrequency="0.01 0.02" numOctaves="3" result="noise"/>
             <feDisplacementMap in="SourceGraphic" in2="noise" scale="25" />
         </filter>
-    </svg>
+    </svg> -->
 
 
     <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollToPlugin.min.js"></script>
+    <script src="https://www.youtube.com/iframe_api"></script>
     <script src="js/main.js"></script>
     <script>
         document.getElementById("mc-embedded-subscribe-form").addEventListener("submit", function(e) {
