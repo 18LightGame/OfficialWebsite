@@ -44,8 +44,21 @@ document.addEventListener("DOMContentLoaded", function () {
         if (youtubePlayer && youtubePlayer.pauseVideo) {
           youtubePlayer.pauseVideo();
         }
-      }
+        const idx = this.realIndex;
+        syncPreviewActive(idx);
+      },
     },
+    breakpoints: {
+      0: {
+        navigation: {
+          nextEl: ".gamepage-demo-button-next",
+          prevEl: ".gamepage-demo-button-prev",
+        },
+      },
+      698: {
+        navigation: false,
+      }
+    }
   });
 
 
