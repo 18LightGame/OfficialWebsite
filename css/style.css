@@ -165,6 +165,11 @@
   flex-grow: 1;
   margin: 0 10%;
 }
+@media (max-width: 421.98px) {
+  .navi-wrapper {
+    justify-content: flex-end;
+  }
+}
 .navi-wrapper > li {
   list-style: none;
   position: relative;
@@ -191,6 +196,11 @@
   display: block;
   content: "\f078";
   font-size: 10px;
+}
+@media (max-width: 421.98px) {
+  .navi-link::after {
+    margin: 0 0 0 20px;
+  }
 }
 .navi-link::before {
   display: block;
@@ -235,6 +245,11 @@
   white-space: nowrap;
   align-items: center;
 }
+@media (max-width: 421.98px) {
+  .attached-menu-link {
+    width: auto;
+  }
+}
 .attached-menu-link::after {
   display: none;
 }
@@ -266,6 +281,7 @@
   text-decoration: none;
   font-size: 14px;
   color: #333;
+  white-space: nowrap;
   transition: 0.3s;
 }
 .lang-option:hover {
@@ -621,7 +637,7 @@
   overflow: hidden;
 }
 .gamesoft-demo-item:hover > img {
-  transform: scale(1.05);
+  transform: scale(1.025);
 }
 .gamesoft-demo-item > img {
   display: block;
@@ -1320,7 +1336,7 @@
 .gamepage-demo-item {
   position: relative;
   width: 100%;
-  padding-bottom: 42%;
+  padding-bottom: 41.66%;
   display: flex;
   justify-content: center;
   overflow: hidden;
@@ -1329,6 +1345,8 @@
   display: block;
   position: absolute;
   width: 100%;
+  top: 50%;
+  transform: translateY(-50%);
 }
 .gamepage-demo-item > iframe {
   position: absolute;
@@ -1336,6 +1354,19 @@
      object-fit: cover;
   width: 100%;
   height: 100%;
+}
+.gamepage-demo-item.video::before {
+  display: flex;
+  content: "";
+  width: 30px;
+  height: 30px;
+  background-image: url(../images/play_video_ico.svg);
+  background-repeat: no-repeat;
+  background-size: 50%;
+  background-position: center center;
+  padding: 10px;
+  border: 1px solid #fff;
+  z-index: 99;
 }
 
 .game-page-slider-preview {
@@ -1357,18 +1388,13 @@
 }
 .game-page-slider-preview .swiper-slide {
   position: relative;
-  width: 8%;
+  width: calc((100% - 80px) / 9);
   padding-bottom: 3.43%;
   overflow: hidden;
   display: flex;
   justify-content: center;
   border: 3px solid #6b6b6b;
   cursor: pointer;
-}
-@media (max-width: 1219.98px) {
-  .game-page-slider-preview .swiper-slide {
-    padding-bottom: 7.6%;
-  }
 }
 @media (max-width: 697.98px) {
   .game-page-slider-preview .swiper-slide {
@@ -1488,6 +1514,7 @@
   height: 24px;
   position: absolute;
   z-index: 5;
+  cursor: pointer;
 }
 .gamepage-demo-button-next::before,
 .gamepage-demo-button-prev::before {
@@ -1495,6 +1522,16 @@
   font-weight: 900;
   font-style: normal;
   display: block;
+  color: #FFF;
+  transition: 0.3s;
+}
+.gamepage-demo-button-next:hover::before,
+.gamepage-demo-button-prev:hover::before {
+  color: #00eaff;
+}
+.gamepage-demo-button-next.swiper-button-disabled,
+.gamepage-demo-button-prev.swiper-button-disabled {
+  opacity: 0;
 }
 @media (max-width: 697.98px) {
   .gamepage-demo-button-next,
@@ -1503,6 +1540,7 @@
     justify-content: center;
     align-items: center;
     color: #fff;
+    transform: translateY(6px);
   }
 }
 
