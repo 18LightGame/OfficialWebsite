@@ -1,21 +1,4 @@
-let mainSwiper, previewSwiper, youtubePlayer;
-
-// === YouTube API Ready ===
-function onYouTubeIframeAPIReady() {
-  youtubePlayer = new YT.Player("youtubePlayer", {
-    events: {
-      onStateChange: onPlayerStateChange,
-    },
-  });
-}
-
-function onPlayerStateChange(event) {
-  if (event.data === YT.PlayerState.PLAYING) {
-    if (mainSwiper && mainSwiper.autoplay.running) {
-      mainSwiper.autoplay.stop();
-    }
-  }
-}
+let mainSwiper, previewSwiper;
 
 document.addEventListener("DOMContentLoaded", function () {
   // === Preview Swiper ===
@@ -41,11 +24,24 @@ document.addEventListener("DOMContentLoaded", function () {
     },
     on: {
       slideChange() {
-        if (youtubePlayer && youtubePlayer.pauseVideo) {
-          youtubePlayer.pauseVideo();
-        }
         const idx = this.realIndex;
         syncPreviewActive(idx);
+      },
+      transitionEnd() {
+        // Find the previously active slide and check if it's a video slide with an iframe
+        const previousSlide = this.slides[this.previousIndex];
+        const videoSlide = previousSlide.classList.contains('video-slide');
+        
+        if (videoSlide && previousSlide.querySelector('iframe')) {
+          const originalSrc = previousSlide.dataset.originalSrc;
+          const originalAlt = previousSlide.dataset.originalAlt || '遊戲影片截圖';
+          if (originalSrc) {
+            previousSlide.innerHTML = `
+              <img src="${originalSrc}" alt="${originalAlt}">
+              <div class="play-button"></div>
+            `;
+          }
+        }
       },
     },
     breakpoints: {
@@ -61,6 +57,36 @@ document.addEventListener("DOMContentLoaded", function () {
     }
   });
 
+  // === Click Play button to load video ===
+  mainSwiper.el.addEventListener('click', function(event) {
+    const playButton = event.target.closest('.play-button');
+    if (playButton) {
+        const slide = playButton.closest('.video-slide');
+        if (slide && !slide.querySelector('iframe')) {
+            const videoId = slide.dataset.videoId;
+            if (videoId) {
+                const image = slide.querySelector('img');
+                if (image) {
+                  slide.dataset.originalSrc = image.getAttribute('src');
+                  slide.dataset.originalAlt = image.getAttribute('alt');
+                }
+                
+                stopAutoplay();
+
+                const iframe = document.createElement('iframe');
+                iframe.src = `https://www.youtube.com/embed/${videoId}?autoplay=1&enablejsapi=1&si=qqYoIzq8BBTntgrZ`;
+                iframe.title = "YouTube video player";
+                iframe.frameBorder = "0";
+                iframe.allow = "accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share";
+                iframe.referrerPolicy = "strict-origin-when-cross-origin";
+                iframe.allowFullscreen = true;
+
+                slide.innerHTML = '';
+                slide.appendChild(iframe);
+            }
+        }
+    }
+  });
 
   // === Click Preview to Switch ===
   previewSwiper.on("click", (swiper) => {

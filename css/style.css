@@ -1327,34 +1327,42 @@
 /* gamepage */
 .game-page-sec {
   width: 100%;
-  padding-bottom: 42.92%;
   position: relative;
   padding: 0;
   overflow: hidden;
+  background-color: #000;
 }
 
 .gamepage-demo-item {
   position: relative;
   width: 100%;
-  padding-bottom: 41.66%;
   display: flex;
   justify-content: center;
+  align-items: center;
   overflow: hidden;
+  background-color: #000;
 }
 .gamepage-demo-item > img {
   display: block;
-  position: absolute;
   width: 100%;
-  top: 50%;
-  transform: translateY(-50%);
+  height: auto;
 }
 .gamepage-demo-item > iframe {
-  position: absolute;
-  -o-object-fit: cover;
-     object-fit: cover;
   width: 100%;
-  height: 100%;
+  aspect-ratio: 16 / 9;
 }
+
+@media (min-width: 992px) {
+  .gamepage-demo-item {
+    height: 90vh;
+  }
+  .gamepage-demo-item > img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+  }
+}
+
 .gamepage-demo-item.video::before {
   display: flex;
   content: "";
@@ -1377,6 +1385,7 @@
   justify-content: space-around;
   transform: translate(0, -50%);
   overflow: hidden;
+  padding: 0 2.5%;
 }
 @media (max-width: 697.98px) {
   .game-page-slider-preview {
@@ -1384,6 +1393,7 @@
   }
 }
 .game-page-slider-preview > .swiper-wrapper {
+  padding-top:2px;
   justify-content: center;
 }
 .game-page-slider-preview .swiper-slide {
@@ -1398,8 +1408,8 @@
 }
 @media (max-width: 697.98px) {
   .game-page-slider-preview .swiper-slide {
-    width: 9px !important;
-    height: 9px;
+    width: 11px !important;
+    height: 11px;
     padding-bottom: 0;
     border: 0;
     background-color: #fff;
@@ -1509,6 +1519,7 @@
 
 .gamepage-demo-button-next,
 .gamepage-demo-button-prev {
+  padding-top:4px;
   display: none;
   width: 24px;
   height: 24px;
@@ -1791,4 +1802,42 @@
   100% {
     background-position: 100% 100%;
   }
-}/*# sourceMappingURL=style.css.map */
+}
+
+.video-slide {
+    position: relative;
+    cursor: pointer;
+}
+
+.video-slide .play-button {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 80px;
+    height: 80px;
+    background-color: rgba(0, 0, 0, 0.5);
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    transition: background-color 0.3s;
+    z-index: 1;
+}
+
+.video-slide:hover .play-button {
+    background-color: rgba(0, 0, 0, 0.8);
+}
+
+.video-slide .play-button::after {
+    content: '';
+    display: block;
+    width: 0;
+    height: 0;
+    border-style: solid;
+    border-width: 20px 0 20px 30px;
+    border-color: transparent transparent transparent white;
+    margin-left: 5px;
+}
+
+/*# sourceMappingURL=style.css.map */
