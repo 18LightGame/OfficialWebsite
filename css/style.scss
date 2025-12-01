@@ -1376,6 +1376,7 @@
         overflow: hidden;
         display: flex;
         justify-content: center;
+        align-items: center;
         border: 3px solid #6b6b6b;
         cursor: pointer;
         @include xl {
@@ -1419,6 +1420,8 @@
             width: 100%;
             object-fit: cover;
             position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
             @include md(){
                 display: none;
             }
