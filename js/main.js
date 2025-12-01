@@ -68,7 +68,7 @@ document.addEventListener("DOMContentLoaded", function () {
             if (videoId) {
                 const image = slide.querySelector('img');
                 if (image) {
-                  slide.dataset.originalSrc = image.getAttributestyle="width: 100%; height: 100%;"('src');
+                  slide.dataset.originalSrc = image.getAttributestyle="width: 100%; height: 100%;";
                   slide.dataset.originalAlt = image.getAttribute('alt');
                 }
                 
