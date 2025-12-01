@@ -18,6 +18,7 @@ document.addEventListener("DOMContentLoaded", function () {
     slidesPerView: 1,
     loop: false,
     speed: 600,
+    allowTouchMove: false,
     autoplay: {
       delay: 3000,
       disableOnInteraction: false,
@@ -32,14 +33,14 @@ document.addEventListener("DOMContentLoaded", function () {
         const previousSlide = this.slides[this.previousIndex];
         const videoSlide = previousSlide.classList.contains('video-slide');
         
-        if (videoSlide && previousSlide.querySelector('iframe')) {
-          const originalSrc = previousSlide.dataset.originalSrc;
-          const originalAlt = previousSlide.dataset.originalAlt || '遊戲影片截圖';
-          if (originalSrc) {
-            previousSlide.innerHTML = `
-              <img src="${originalSrc}" alt="${originalAlt}">
-              <div class="play-button"></div>
-            `;
+        const videoContainer = previousSlide.querySelector('.video-container');
+        if (videoContainer) {
+          previousSlide.removeChild(videoContainer);
+          const playButton = previousSlide.querySelector('.play-button');
+          if(playButton) {
+            playButton.style.display = 'block';
+            // Force reflow
+            void playButton.offsetWidth;
           }
         }
       },
@@ -67,11 +68,14 @@ document.addEventListener("DOMContentLoaded", function () {
             if (videoId) {
                 const image = slide.querySelector('img');
                 if (image) {
-                  slide.dataset.originalSrc = image.getAttribute('src');
+                  slide.dataset.originalSrc = image.getAttributestyle="width: 100%; height: 100%;"('src');
                   slide.dataset.originalAlt = image.getAttribute('alt');
                 }
                 
                 stopAutoplay();
+
+                const iframeContainer = document.createElement('div');
+                iframeContainer.classList.add('video-container');
 
                 const iframe = document.createElement('iframe');
                 iframe.src = `https://www.youtube.com/embed/${videoId}?autoplay=1&enablejsapi=1&si=qqYoIzq8BBTntgrZ`;
@@ -81,8 +85,9 @@ document.addEventListener("DOMContentLoaded", function () {
                 iframe.referrerPolicy = "strict-origin-when-cross-origin";
                 iframe.allowFullscreen = true;
 
-                slide.innerHTML = '';
-                slide.appendChild(iframe);
+                iframeContainer.appendChild(iframe);
+                slide.insertBefore(iframeContainer, image);
+                playButton.style.display = 'none';
             }
         }
     }
