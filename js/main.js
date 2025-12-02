@@ -1,252 +1,211 @@
-let mainSwiper, previewSwiper;
-
 document.addEventListener("DOMContentLoaded", function () {
-  // === Preview Swiper ===
-  previewSwiper = new Swiper(".game-page-slider-preview", {
-    loop: false,
-    slidesPerView: 10,
-    spaceBetween: 10,
-    centeredSlides: true,
-    watchSlidesProgress: true,
-    slideToClickedSlide: true,
-    freeMode: false,
-    centeredSlides: false,
-  });
+  let mainSwiper, previewSwiper;
 
-  // === Main Swiper ===
-  mainSwiper = new Swiper(".topic-sec.game-page-sec", {
-    slidesPerView: 1,
-    loop: false,
-    speed: 600,
-    allowTouchMove: false,
-    autoplay: {
-      delay: 3000,
-      disableOnInteraction: false,
-    },
-    on: {
-      slideChange() {
-        const idx = this.realIndex;
-        syncPreviewActive(idx);
+  const mainSwiperEl = document.querySelector(".topic-sec.game-page-sec");
+  const previewSwiperEl = document.querySelector(".game-page-slider-preview");
+
+  if (mainSwiperEl && previewSwiperEl) {
+    // === Preview Swiper ===
+    previewSwiper = new Swiper(previewSwiperEl, {
+      loop: false,
+      slidesPerView: 10,
+      spaceBetween: 10,
+      centeredSlides: true,
+      watchSlidesProgress: true,
+      slideToClickedSlide: true,
+      freeMode: false,
+      centeredSlides: false,
+    });
+
+    // === Main Swiper ===
+    mainSwiper = new Swiper(mainSwiperEl, {
+      slidesPerView: 1,
+      loop: false,
+      speed: 600,
+      allowTouchMove: false,
+      autoplay: {
+        delay: 3000,
+        disableOnInteraction: false,
       },
-      transitionEnd() {
-        // Find the previously active slide and check if it's a video slide with an iframe
-        const previousSlide = this.slides[this.previousIndex];
-        const videoSlide = previousSlide.classList.contains('video-slide');
-        
-        const videoContainer = previousSlide.querySelector('.video-container');
-        if (videoContainer) {
-          previousSlide.removeChild(videoContainer);
-          const playButton = previousSlide.querySelector('.play-button');
-          if(playButton) {
-            playButton.style.display = 'block';
-            // Force reflow
-            void playButton.offsetWidth;
+      on: {
+        slideChange() {
+          const idx = this.realIndex;
+          syncPreviewActive(idx);
+          this.update();
+        },
+        transitionEnd() {
+          const previousSlide = this.slides[this.previousIndex];
+          if (!previousSlide) return;
+          
+          const videoContainer = previousSlide.querySelector('.video-container');
+          if (videoContainer) {
+            previousSlide.removeChild(videoContainer);
+            const playButton = previousSlide.querySelector('.play-button');
+            if(playButton) {
+              playButton.style.display = '';
+            }
           }
-        }
-      },
-    },
-    breakpoints: {
-      0: {
-        navigation: {
-          nextEl: ".gamepage-demo-button-next",
-          prevEl: ".gamepage-demo-button-prev",
+          this.update();
         },
       },
-      698: {
-        navigation: false,
+      breakpoints: {
+        0: {
+          navigation: {
+            nextEl: ".gamepage-demo-button-next",
+            prevEl: ".gamepage-demo-button-prev",
+          },
+        },
+        698: {
+          navigation: false,
+        }
+      }
+    });
+
+    mainSwiper.el.addEventListener('click', function(event) {
+      const playButton = event.target.closest('.play-button');
+      if (playButton) {
+          const slide = playButton.closest('.video-slide');
+          if (slide && !slide.querySelector('iframe')) {
+              const videoId = slide.dataset.videoId;
+              if (videoId) {
+                  const image = slide.querySelector('img');
+                  if (image) {
+                    slide.dataset.originalSrc = image.getAttribute('src');
+                    slide.dataset.originalAlt = image.getAttribute('alt');
+                  }
+                  
+                  stopAutoplay();
+
+                  const iframeContainer = document.createElement('div');
+                  iframeContainer.classList.add('video-container');
+
+                  const iframe = document.createElement('iframe');
+                  iframe.src = `https://www.youtube.com/embed/${videoId}?autoplay=1&enablejsapi=1&si=qqYoIzq8BBTntgrZ`;
+                  iframe.title = "YouTube video player";
+                  iframe.frameBorder = "0";
+                  iframe.allow = "accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share";
+                  iframe.referrerPolicy = "strict-origin-when-cross-origin";
+                  iframe.allowFullscreen = true;
+
+                  iframeContainer.appendChild(iframe);
+                  slide.insertBefore(iframeContainer, image);
+                  playButton.style.display = 'none';
+              }
+          }
+      }
+    });
+
+    previewSwiper.on("click", (swiper) => {
+      const clickedIndex = swiper.clickedIndex;
+      if (typeof clickedIndex !== "undefined") {
+        mainSwiper.slideToLoop(clickedIndex);
+        stopAutoplay();
+        syncPreviewActive(clickedIndex);
+      }
+    });
+
+    function syncPreviewActive(index) {
+      previewSwiper.slides.forEach((slide, i) => {
+        slide.classList.toggle("active", i % previewSwiper.slides.length === index);
+      });
+      previewSwiper.slideToLoop(index);
+    }
+
+    function stopAutoplay() {
+      if (mainSwiper.autoplay.running) {
+        mainSwiper.autoplay.stop();
       }
     }
-  });
 
-  // === Click Play button to load video ===
-  mainSwiper.el.addEventListener('click', function(event) {
-    const playButton = event.target.closest('.play-button');
-    if (playButton) {
-        const slide = playButton.closest('.video-slide');
-        if (slide && !slide.querySelector('iframe')) {
-            const videoId = slide.dataset.videoId;
-            if (videoId) {
-                const image = slide.querySelector('img');
-                if (image) {
-                  slide.dataset.originalSrc = image.getAttributestyle="width: 100%; height: 100%;";
-                  slide.dataset.originalAlt = image.getAttribute('alt');
-                }
-                
-                stopAutoplay();
-
-                const iframeContainer = document.createElement('div');
-                iframeContainer.classList.add('video-container');
-
-                const iframe = document.createElement('iframe');
-                iframe.src = `https://www.youtube.com/embed/${videoId}?autoplay=1&enablejsapi=1&si=qqYoIzq8BBTntgrZ`;
-                iframe.title = "YouTube video player";
-                iframe.frameBorder = "0";
-                iframe.allow = "accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share";
-                iframe.referrerPolicy = "strict-origin-when-cross-origin";
-                iframe.allowFullscreen = true;
-
-                iframeContainer.appendChild(iframe);
-                slide.insertBefore(iframeContainer, image);
-                playButton.style.display = 'none';
-            }
-        }
-    }
-  });
-
-  // === Click Preview to Switch ===
-  previewSwiper.on("click", (swiper) => {
-    const clickedIndex = swiper.clickedIndex;
-    if (typeof clickedIndex !== "undefined") {
-      mainSwiper.slideToLoop(clickedIndex);
-      stopAutoplay();
-      syncPreviewActive(clickedIndex);
-    }
-  });
-
-  function syncPreviewActive(index) {
-    previewSwiper.slides.forEach((slide, i) => {
-      slide.classList.toggle("active", i % previewSwiper.slides.length === index);
+    [mainSwiper.el, previewSwiper.el].forEach((el) => {
+      el.addEventListener("mousedown", stopAutoplay);
+      el.addEventListener("touchstart", stopAutoplay);
     });
-    previewSwiper.slideToLoop(index);
+
+    syncPreviewActive(0);
   }
 
-  function stopAutoplay() {
-    if (mainSwiper.autoplay.running) {
-      mainSwiper.autoplay.stop();
-    }
+  // About Gallery 
+  const aboutGalleryEl = document.querySelector(".about-gallery");
+  if (aboutGalleryEl) {
+    let aboutGallery = new Swiper(aboutGalleryEl, {
+        effect: "flip",
+        autoplay: {
+            delay: 2500,
+            disableOnInteraction: true,
+        },
+    });
   }
 
-  [mainSwiper.el, previewSwiper.el].forEach((el) => {
-    el.addEventListener("mousedown", stopAutoplay);
-    el.addEventListener("touchstart", stopAutoplay);
-  });
+  // Game Soft Slider 
+  const gameDemoSliderEls = document.querySelectorAll(".gamesoft-demo-slider");
+  if (gameDemoSliderEls.length > 0) {
+    gameDemoSliderEls.forEach(slider => {
+      new Swiper(slider, {
+          spaceBetween: 30,
+          autoplay: {
+              delay: 2500,
+              disableOnInteraction: true,
+          },
+      });
+    });
+  }
 
-  syncPreviewActive(0);
-});
+  // Game Info Pronty Effect
+  const turb = document.getElementById("turbulence-pronty");
+  if (turb) {
+    gsap.to(turb, {
+        attr: { baseFrequency: "0.015 0.025" },
+        duration: 6,
+        repeat: -1,
+        yoyo: true,
+        ease: "sine.inOut"
+    });
+  }
 
-// Effect
-// gsap.registerPlugin(ScrollTrigger, ScrollToPlugin);
+  // Mailchimp form
+  const mailchimpForm = document.getElementById("mc-embedded-subscribe-form");
+  if (mailchimpForm) {
+    mailchimpForm.addEventListener("submit", function(e) {
+        e.preventDefault();
 
-// const sections = document.querySelectorAll(".topic-sec");
-// const dotNav = document.querySelector(".dot-nav");
-// const toolSec = document.querySelector(".tool-sec");
+        const emailInput = document.getElementById("mce-EMAIL");
+        const lnameInput = document.getElementById("mce-LNAME");
+        const phoneInput = document.getElementById("mce-PHONE");
+        const status = document.getElementById("mc-status");
 
-// let currentSection = 0;
-// let isAnimating = false;
-// let isDesktop = window.innerWidth > 767.98;
+        const email = emailInput ? emailInput.value : "";
+        const lname = lnameInput ? lnameInput.value : "";
+        const phone = phoneInput ? phoneInput.value : "";
 
-// === Game Soft Section ===
-// const gameSoftSecs = document.querySelectorAll(".game-soft-sec");
-
-// gameSoftSecs.forEach((sec) => {
-//   const bg = sec.querySelector(".game-soft-sec-bg");
-//   if (!bg) return;
-
-  // Timeline
-  // const tl = gsap.timeline({ repeat: -1, repeatDelay: 0.2, paused: true });
-
-  // Backgrouind Effect
-//   tl.fromTo(bg, 
-//     { opacity: 0, scale: 1, filter: "blur(10px) brightness(0.6)" },
-//     { opacity: 1, scale: 1.1, filter: "blur(0px) brightness(1)", duration: 1.2, ease: "power2.out" }
-//   )
-//   .to(bg, 
-//     { scale: 1.2, rotate: "3deg", duration: 8, ease: "sine.inOut" }
-//   )
-//   .to(bg, 
-//     { filter: "blur(2px) brightness(1.8)", duration: .8, ease: "sine.inOut" }
-//   )
-//   .to(bg, 
-//     { opacity: 0, scale: 1.4, filter: "blur(10px) brightness(2)", duration: .7, ease: "power2.in" }
-//   );
-
-//   ScrollTrigger.create({
-//     trigger: sec,
-//     start: "top center",
-//     end: "bottom center",
-//     onEnter: () => tl.play(),
-//     onLeave: () => tl.pause(0),
-//     onEnterBack: () => tl.play(),
-//     onLeaveBack: () => tl.pause(0),
-//   });
-// });
-
-// About Gallery 
-let aboutGallery = new Swiper(".about-gallery", {
-    effect: "flip",
-    autoplay: {
-        delay: 2500,
-        disableOnInteraction: true,
-    },
-});
-
-// Game Soft Slider 
-let gameDemoSlider = new Swiper(".gamesoft-demo-slider", {
-    spaceBetween: 30,
-    autoplay: {
-        delay: 2500,
-        disableOnInteraction: true,
-    },
-});
-
-// Game Info Pronty Effect
-const turb = document.getElementById("turbulence-pronty");
-
-gsap.to(turb, {
-    attr: { baseFrequency: "0.015 0.025" },
-    duration: 6,
-    repeat: -1,
-    yoyo: true,
-    ease: "sine.inOut"
-});
-
-// NaviDots Detected
-// let lastSyncTime = 0;
-
-// window.addEventListener("scroll", () => {
-//   if (!isDesktop) return;
-
-//   const now = Date.now();
-//   if (now - lastSyncTime < 200) return; 
-//   lastSyncTime = now;
-
-//   syncCurrentSection(); 
-//   updateDots();
-//   updateToolBar();
-// });
-
-document.getElementById("mc-embedded-subscribe-form").addEventListener("submit", function(e) {
-    e.preventDefault();
-
-    const email = document.getElementById("mce-EMAIL").value;
-    const lname = document.getElementById("mce-LNAME").value;
-    const phone = document.getElementById("mce-PHONE").value;
-    const status = document.getElementById("mc-status");
-
-    if(email==""){
-        alert("Email必填");
-        return
-    }
-
-    const url = "https://gmail.us22.list-manage.com/subscribe/post-json?u=d2dafc0aa1da36bc830a8dcc2&id=2633d14e4a&c=?";
-
-    status.textContent = "送出中...";
-    status.style.color = "#555";
-
-    // 利用 JSONP 呼叫 Mailchimp
-    const script = document.createElement("script");
-    script.src = `${url}&EMAIL=${encodeURIComponent(email)}&LNAME=${encodeURIComponent(lname)}&PHONE=${encodeURIComponent(phone)}&tags=${encodeURIComponent("115")}&c=mcCallback`;
-    
-    window.mcCallback = function(data) {
-        if (data.result === "success") {
-            status.textContent = "✅ 感謝訂閱！";
-            status.style.color = "green";
-        } else {
-            status.textContent = "❌ 發送失敗：" + (data.msg || "請稍後再試");
-            status.style.color = "red";
+        if(email==""){
+            alert("Email is required.");
+            return
         }
-        script.remove();
-    };
-    
-    document.body.appendChild(script);
+
+        const url = "https://gmail.us22.list-manage.com/subscribe/post-json?u=d2dafc0aa1da36bc830a8dcc2&id=2633d14e4a&c=?";
+
+        status.textContent = "sending...";
+        status.style.color = "#555";
+
+        const script = document.createElement("script");
+        const lang = document.documentElement.lang;
+        const tags = lang.includes('en') ? "115" : "689";
+        script.src = `${url}&EMAIL=${encodeURIComponent(email)}&LNAME=${encodeURIComponent(lname)}&PHONE=${encodeURIComponent(phone)}&tags=${encodeURIComponent(tags)}&c=mcCallback`;
+        
+        window.mcCallback = function(data) {
+            if (data.result === "success") {
+                status.textContent = lang.includes('en') ? "✅ Thanks Subscribe ！" : "✅ 感謝訂閱！";
+                status.style.color = "green";
+            } else {
+                let message = data.msg || (lang.includes('en') ? "please try again later" : "請稍後再試");
+                status.textContent = "❌ error：" + message;
+                status.style.color = "red";
+            }
+            script.remove();
+        };
+        
+        document.body.appendChild(script);
+    });
+  }
 });
