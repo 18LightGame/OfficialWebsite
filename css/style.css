@@ -2000,3 +2000,9 @@
 		object-fit: contain;
 	}
 }
+
+@media (min-width: 1580px) {
+  .video-container {
+    width: 70%;
+  }
+}
