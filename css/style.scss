@@ -1790,6 +1790,9 @@
 			height: 100%;
 			object-fit: contain;
 		}
+		&:first-child > img {
+			object-fit: fill;
+		}
 	}
 }
 @media (min-width: 1580px) {
