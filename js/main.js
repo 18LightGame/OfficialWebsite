@@ -163,49 +163,4 @@ document.addEventListener("DOMContentLoaded", function () {
     });
   }
 
-  // Mailchimp form
-  const mailchimpForm = document.getElementById("mc-embedded-subscribe-form");
-  if (mailchimpForm) {
-    mailchimpForm.addEventListener("submit", function(e) {
-        e.preventDefault();
-
-        const emailInput = document.getElementById("mce-EMAIL");
-        const lnameInput = document.getElementById("mce-LNAME");
-        const phoneInput = document.getElementById("mce-PHONE");
-        const status = document.getElementById("mc-status");
-
-        const email = emailInput ? emailInput.value : "";
-        const lname = lnameInput ? lnameInput.value : "";
-        const phone = phoneInput ? phoneInput.value : "";
-
-        if(email==""){
-            alert("Email is required.");
-            return
-        }
-
-        const url = "https://gmail.us22.list-manage.com/subscribe/post-json?u=d2dafc0aa1da36bc830a8dcc2&id=2633d14e4a&c=?";
-
-        status.textContent = "sending...";
-        status.style.color = "#555";
-
-        const script = document.createElement("script");
-        const lang = document.documentElement.lang;
-        const tags = lang.includes('en') ? "115" : "689";
-        script.src = `${url}&EMAIL=${encodeURIComponent(email)}&LNAME=${encodeURIComponent(lname)}&PHONE=${encodeURIComponent(phone)}&tags=${encodeURIComponent(tags)}&c=mcCallback`;
-        
-        window.mcCallback = function(data) {
-            if (data.result === "success") {
-                status.textContent = lang.includes('en') ? "✅ Thanks Subscribe ！" : "✅ 感謝訂閱！";
-                status.style.color = "green";
-            } else {
-                let message = data.msg || (lang.includes('en') ? "please try again later" : "請稍後再試");
-                status.textContent = "❌ error：" + message;
-                status.style.color = "red";
-            }
-            script.remove();
-        };
-        
-        document.body.appendChild(script);
-    });
-  }
 });
