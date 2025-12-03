@@ -1445,7 +1445,8 @@
 .game-page-slider-preview .swiper-slide {
 	position: relative;
 	width: calc((100% - 80px) / 9);
-	padding-bottom: 3.43%;
+	background-color: #000;
+	padding-bottom: 4%;
 	overflow: hidden;
 	display: flex;
 	justify-content: center;
@@ -1993,7 +1994,7 @@
 
 @media (min-width: 992px) {
 	.gamepage-demo-item {
-		height: 90vh;
+		height: 87vh;
 	}
 
 	.gamepage-demo-item>img {
@@ -2003,7 +2004,7 @@
 	}
 
 	.gamepage-demo-item:first-child>img {
-		object-fit: fill;
+		object-fit: cover;
 	}
 }
 
