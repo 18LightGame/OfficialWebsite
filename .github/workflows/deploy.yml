@@ -27,7 +27,7 @@ jobs:
     - name: Prepare output folder
       run: |
         mkdir out
-        cp -r * out/
+        rsync -av --exclude=out ./ ./out
 
     - name: Deploy to gh-pages
       uses: peaceiris/actions-gh-pages@v3
