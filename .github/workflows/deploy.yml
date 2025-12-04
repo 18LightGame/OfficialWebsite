@@ -1,0 +1,45 @@
+name: Deploy main & dev to GitHub Pages
+
+on:
+  push:
+    branches:
+      - main
+      - dev
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+
+    steps:
+    - name: Checkout source
+      uses: actions/checkout@v3
+      with:
+        fetch-depth: 0
+
+    # 如果你的專案需要編譯（例如 npm run build）
+    # 在這裡加入 build 步驟
+    # - name: Install dependencies
+    #   run: npm install
+    #
+    # - name: Build project
+    #   run: npm run build
+
+    - name: Prepare output folder
+      run: |
+        mkdir out
+        rsync -av --exclude=out ./ ./out
+
+    - name: Deploy to gh-pages
+      uses: peaceiris/actions-gh-pages@v3
+      with:
+        github_token: ${{ secrets.GITHUB_TOKEN }}
+        publish_branch: gh-pages
+
+        # main → 根目錄，不加子資料夾
+        # dev → /dev 子資料夾
+        publish_dir: ./out
+        destination_dir: ${{ github.ref_name == 'dev' && 'dev' || '' }}
+
+        keep_files: true
